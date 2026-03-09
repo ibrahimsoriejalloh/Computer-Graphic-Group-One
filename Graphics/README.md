@@ -70,6 +70,7 @@ For a complete written explanation of the project, refer to:
 
 This report can be printed or converted into another format (e.g. Word or PDF) as required for submission.
 
-Git Hub Link https://github.com/ibrahimsoriejalloh/Computer-Graphic-Group-One.git
+## Git Hub Link https://github.com/ibrahimsoriejalloh/Computer-Graphic-Group-One.git
 
-#Computer Graphic Group One
+
+## Computer Graphic Group One
