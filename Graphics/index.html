@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive 3D Transformations Tutor</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-root">
+      <header class="app-header">
+        <div>
+          <h1>Group One – 3D Geometry Transformations Tutor</h1>
+          <p class="subtitle">
+            A graphics-based educational tool for teaching 3D geometry
+            transformations, projections, and viewing.
+          </p>
+        </div>
+        <div class="course-meta">
+          <div><strong>Group:</strong> One</div>
+          <div><strong>Project:</strong> Graphics-based tool for teaching geometry / physics</div>
+          <div><strong>Tech:</strong> HTML, CSS, JavaScript, WebGL</div>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="canvas-panel">
+          <canvas id="glCanvas" width="800" height="600">
+            Your browser does not support the HTML5 canvas tag.
+          </canvas>
+          <div class="canvas-footer">
+            <span class="hint">
+              Rotate the object with the controls. The axes are coloured:
+              <span class="axis-x">X (red)</span>,
+              <span class="axis-y">Y (green)</span>,
+              <span class="axis-z">Z (blue)</span>.
+            </span>
+          </div>
+        </section>
+
+        <section class="control-panel">
+          <h2>Controls</h2>
+
+          <div class="control-group">
+            <h3>Model Transformations</h3>
+            <div class="control-row">
+              <label for="rotX">Rotate X (°)</label>
+              <input type="range" id="rotX" min="-180" max="180" value="30" />
+              <span id="rotXVal" class="value-label">30</span>
+            </div>
+            <div class="control-row">
+              <label for="rotY">Rotate Y (°)</label>
+              <input type="range" id="rotY" min="-180" max="180" value="40" />
+              <span id="rotYVal" class="value-label">40</span>
+            </div>
+            <div class="control-row">
+              <label for="rotZ">Rotate Z (°)</label>
+              <input type="range" id="rotZ" min="-180" max="180" value="0" />
+              <span id="rotZVal" class="value-label">0</span>
+            </div>
+
+            <div class="control-row">
+              <label for="scale">Uniform Scale</label>
+              <input type="range" id="scale" min="0.2" max="2.5" step="0.1" value="1" />
+              <span id="scaleVal" class="value-label">1.0</span>
+            </div>
+
+            <div class="control-row">
+              <label for="transX">Translate X</label>
+              <input type="range" id="transX" min="-3" max="3" step="0.1" value="0" />
+              <span id="transXVal" class="value-label">0.0</span>
+            </div>
+            <div class="control-row">
+              <label for="transY">Translate Y</label>
+              <input type="range" id="transY" min="-3" max="3" step="0.1" value="0" />
+              <span id="transYVal" class="value-label">0.0</span>
+            </div>
+            <div class="control-row">
+              <label for="transZ">Translate Z</label>
+              <input type="range" id="transZ" min="-6" max="2" step="0.1" value="-3" />
+              <span id="transZVal" class="value-label">-3.0</span>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <h3>Camera & Projection</h3>
+            <div class="control-row">
+              <label for="projectionType">Projection</label>
+              <select id="projectionType">
+                <option value="perspective" selected>Perspective</option>
+                <option value="orthographic">Orthographic</option>
+              </select>
+            </div>
+            <div class="control-row">
+              <label for="fov">Field of View (°)</label>
+              <input type="range" id="fov" min="20" max="100" value="60" />
+              <span id="fovVal" class="value-label">60</span>
+            </div>
+            <div class="control-row">
+              <label for="camDist">Camera Distance</label>
+              <input type="range" id="camDist" min="3" max="15" step="0.5" value="8" />
+              <span id="camDistVal" class="value-label">8.0</span>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <h3>Lighting</h3>
+            <div class="control-row">
+              <label for="lightingEnabled">Enable Lighting</label>
+              <input type="checkbox" id="lightingEnabled" checked />
+            </div>
+            <div class="control-row">
+              <label for="ambient">Ambient Intensity</label>
+              <input type="range" id="ambient" min="0" max="1" step="0.05" value="0.3" />
+              <span id="ambientVal" class="value-label">0.30</span>
+            </div>
+            <div class="control-row">
+              <label for="diffuse">Diffuse Intensity</label>
+              <input type="range" id="diffuse" min="0" max="1" step="0.05" value="0.7" />
+              <span id="diffuseVal" class="value-label">0.70</span>
+            </div>
+            <div class="control-row">
+              <label for="autoRotate">Auto Rotate (demo)</label>
+              <input type="checkbox" id="autoRotate" checked />
+              <span class="value-label">on</span>
+            </div>
+          </div>
+
+          <button id="resetBtn" class="reset-btn">Reset to Default</button>
+        </section>
+      </main>
+
+      <section class="info-panel">
+        <div class="info-section">
+          <h2>What you are learning</h2>
+          <p>
+            This tool demonstrates the core pipeline of modern computer graphics using WebGL.
+            You can interactively explore:
+          </p>
+          <ul>
+            <li><strong>3D geometry transformations</strong>: translation, rotation, and scaling of a 3D object.</li>
+            <li><strong>View transformation</strong>: camera position and its effect on the scene.</li>
+            <li><strong>Projection</strong>: difference between perspective and orthographic projections.</li>
+            <li><strong>Lighting</strong>: simple ambient and diffuse shading on a cube.</li>
+          </ul>
+        </div>
+
+        <div class="info-section matrix-section">
+          <h2>Current Transformation Matrix (Model-View-Projection)</h2>
+          <p>
+            The 4×4 matrix below is the combined result of the model, view, and projection
+            transformations applied to each vertex of the cube:
+          </p>
+          <pre id="mvpMatrixDisplay" class="matrix-display">Loading...</pre>
+        </div>
+
+        <div class="info-section">
+          <h2>How this supports geometry / physics learning</h2>
+          <ul>
+            <li><strong>Mathematical foundations</strong>: uses 4×4 matrices for 3D transformations and projections.</li>
+            <li><strong>Spatial reasoning</strong>: helps students see how moving and rotating shapes changes their position and orientation in space.</li>
+            <li><strong>Projection and viewing</strong>: shows how the same 3D object can look different under perspective and orthographic views.</li>
+            <li><strong>Illumination & shading</strong>: illustrates how light direction affects the appearance of surfaces.</li>
+            <li><strong>Interactive exploration</strong>: learners experiment with controls to build intuition about 3D geometry and simple physics-style scenes.</li>
+          </ul>
+        </div>
+      </section>
+
+      <footer class="app-footer">
+        <span>Group One &mdash; Graphics-Based Educational Tool for Teaching Geometry / Physics</span>
+      </footer>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>
+
